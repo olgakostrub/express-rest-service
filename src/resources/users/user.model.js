@@ -17,6 +17,11 @@ class User {
     const { id, name, login } = user;
     return { id, name, login };
   }
+
+  static toPostResponse(user) {
+    const { name, login } = user;
+    return { name, login };
+  }
 }
 
 module.exports = User;
