@@ -1,7 +1,7 @@
-const uuid = require('uuid');
+const Board = require('./board.model');
 
 const boards = [
-  {
+  new Board({
     id: '0fb25d25-96e3-4af0-bf1c-ee126dac610c',
     title: 'Board1',
     columns: [
@@ -14,7 +14,7 @@ const boards = [
         order: 2
       }
     ]
-  }
+  })
 ];
 
 const getAll = async () => {
@@ -26,9 +26,9 @@ const getById = async id => {
 };
 
 const createBoard = async board => {
-  const id = uuid.v4();
-  boards.push({ ...board, id });
-  return getById(id);
+  const newBoard = new Board(board);
+  boards.push(newBoard);
+  return newBoard;
 };
 
 const updateBoard = async (id, board) => {

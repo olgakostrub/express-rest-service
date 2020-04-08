@@ -1,16 +1,15 @@
-const uuid = require('uuid');
+const User = require('./user.model');
 
 const users = [
-  {
+  new User({
     id: '7fb25d25-96e3-4af0-bf1c-ee126dac610c',
     name: 'Olga',
     login: 'olga',
     password: 'olga123'
-  }
+  })
 ];
 
 const getAll = async () => {
-  // TODO: mock implementation. should be replaced during task development
   return users;
 };
 
@@ -19,9 +18,9 @@ const getById = async id => {
 };
 
 const createUser = async user => {
-  const id = uuid.v4();
-  users.push({ ...user, id });
-  return getById(id);
+  const newUser = new User(user);
+  users.push(newUser);
+  return newUser;
 };
 
 const updateUser = async (id, user) => {
