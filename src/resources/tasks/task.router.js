@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const tasksService = require('./task.service');
+const { NOT_FOUND } = require('http-status-codes');
+const { ValidationError } = require('../../middleware/errors');
 
 router
   .get('/', async (req, res) => {
@@ -11,9 +13,14 @@ router
     if (task) {
       res.status(200).json(task);
     } else {
-      res.status(404).json({
+      throw new ValidationError({
+        status: NOT_FOUND,
         message: 'Task not found'
       });
+
+      // res.status(404).json({
+      //   message: 'Task not found'
+      // });
     }
   })
   .post('/', async (req, res) => {
@@ -25,9 +32,14 @@ router
     if (task) {
       res.status(200).json(task);
     } else {
-      res.status(404).json({
+      throw new ValidationError({
+        status: NOT_FOUND,
         message: 'Task not found'
       });
+
+      // res.status(404).json({
+      //   message: 'Task not found'
+      // });
     }
   })
   .delete('/:id', async (req, res) => {
@@ -35,9 +47,14 @@ router
     if (task) {
       res.sendStatus(204);
     } else {
-      res.status(404).json({
-        message: 'User not found'
+      throw new ValidationError({
+        status: NOT_FOUND,
+        message: 'Task not found'
       });
+
+      // res.status(404).json({
+      //   message: 'User not found'
+      // });
     }
   });
 

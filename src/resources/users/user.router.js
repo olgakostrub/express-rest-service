@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const User = require('./user.model');
 const usersService = require('./user.service');
+const { NOT_FOUND } = require('http-status-codes');
+const { ValidationError } = require('../../middleware/errors');
 
 router
   .get('/', async (req, res) => {
@@ -13,9 +15,13 @@ router
     if (user) {
       res.status(200).json(User.toResponse(user));
     } else {
-      res.status(404).json({
+      throw new ValidationError({
+        status: NOT_FOUND,
         message: 'User not found'
       });
+      // res.status(404).json({
+      //   message: 'User not found'
+      // });
     }
   })
   .post('/', async (req, res) => {
@@ -27,9 +33,13 @@ router
     if (user) {
       res.status(200).json(User.toResponse(user));
     } else {
-      res.status(404).json({
+      throw new ValidationError({
+        status: NOT_FOUND,
         message: 'User not found'
       });
+      // res.status(404).json({
+      //   message: 'User not found'
+      // });
     }
   })
   .delete('/:id', async (req, res) => {
@@ -37,9 +47,14 @@ router
     if (user) {
       res.sendStatus(204);
     } else {
-      res.status(404).json({
+      throw new ValidationError({
+        status: NOT_FOUND,
         message: 'User not found'
       });
+
+      // res.status(404).json({
+      //   message: 'User not found'
+      // });
     }
   });
 

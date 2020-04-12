@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const boardsService = require('./board.service');
 const taskRouter = require('../tasks/task.router');
+const { NOT_FOUND } = require('http-status-codes');
+const { ValidationError } = require('../../middleware/errors');
 
 router.use(
   '/:boardId/tasks',
@@ -21,9 +23,13 @@ router
     if (board) {
       res.status(200).json(board);
     } else {
-      res.status(404).json({
+      throw new ValidationError({
+        status: NOT_FOUND,
         message: 'Board not found'
       });
+      // res.status(404).json({
+      //   message: 'Board not found'
+      // });
     }
   })
   .post('/', async (req, res) => {
@@ -35,9 +41,13 @@ router
     if (board) {
       res.status(200).json(board);
     } else {
-      res.status(404).json({
+      throw new ValidationError({
+        status: NOT_FOUND,
         message: 'Board not found'
       });
+      // res.status(404).json({
+      //   message: 'Board not found'
+      // });
     }
   })
   .delete('/:boardId', async (req, res) => {
@@ -45,9 +55,13 @@ router
     if (board) {
       res.sendStatus(204);
     } else {
-      res.status(404).json({
+      throw new ValidationError({
+        status: NOT_FOUND,
         message: 'Board not found'
       });
+      // res.status(404).json({
+      //   message: 'Board not found'
+      // });
     }
   });
 
