@@ -8,7 +8,10 @@ function logRequest(req, res, next) {
 
 function logError(err) {
   console.error('Error: ', err.status);
-  console.error('Message:', err.message);
+  if (err.type) {
+    console.error('Error type:', err.type);
+  }
+  console.error('Message:', err.message, '\n');
 }
 
 module.exports = {

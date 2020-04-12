@@ -17,11 +17,9 @@ router
     } else {
       throw new ValidationError({
         status: NOT_FOUND,
-        message: 'User not found'
+        message: 'User not found',
+        type: 'Validation error'
       });
-      // res.status(404).json({
-      //   message: 'User not found'
-      // });
     }
   })
   .post('/', async (req, res) => {
@@ -35,11 +33,9 @@ router
     } else {
       throw new ValidationError({
         status: NOT_FOUND,
-        message: 'User not found'
+        message: 'User not found',
+        type: 'Validation error'
       });
-      // res.status(404).json({
-      //   message: 'User not found'
-      // });
     }
   })
   .delete('/:id', async (req, res) => {
@@ -49,12 +45,9 @@ router
     } else {
       throw new ValidationError({
         status: NOT_FOUND,
-        message: 'User not found'
+        message: 'User not found',
+        type: 'Validation error'
       });
-
-      // res.status(404).json({
-      //   message: 'User not found'
-      // });
     }
   });
 

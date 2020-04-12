@@ -18,18 +18,20 @@ router
     const boards = await boardsService.getAll();
     res.status(200).json(boards);
   })
-  .get('/:boardId', async (req, res) => {
-    const board = await boardsService.getById(req.params.boardId);
-    if (board) {
-      res.status(200).json(board);
-    } else {
-      throw new ValidationError({
-        status: NOT_FOUND,
-        message: 'Board not found'
-      });
-      // res.status(404).json({
-      //   message: 'Board not found'
-      // });
+  .get('/:boardId', async (req, res, next) => {
+    try {
+      const board = await boardsService.getById(req.params.boardId);
+      if (board) {
+        res.status(200).json(board);
+      } else {
+        throw new ValidationError({
+          status: NOT_FOUND,
+          message: 'Board not found',
+          type: 'Validation error'
+        });
+      }
+    } catch (err) {
+      return next(err);
     }
   })
   .post('/', async (req, res) => {
@@ -43,11 +45,9 @@ router
     } else {
       throw new ValidationError({
         status: NOT_FOUND,
-        message: 'Board not found'
+        message: 'Board not found',
+        type: 'Validation error'
       });
-      // res.status(404).json({
-      //   message: 'Board not found'
-      // });
     }
   })
   .delete('/:boardId', async (req, res) => {
@@ -57,11 +57,9 @@ router
     } else {
       throw new ValidationError({
         status: NOT_FOUND,
-        message: 'Board not found'
+        message: 'Board not found',
+        type: 'Validation error'
       });
-      // res.status(404).json({
-      //   message: 'Board not found'
-      // });
     }
   });
 

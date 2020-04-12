@@ -5,18 +5,20 @@ class ValidationError extends Error {
   constructor(error) {
     super();
     this.status = error.status;
+    this.type = error.type || 'Unknown server error';
     this.message = error.message || getStatusText(status);
   }
 }
 
 function errorHandler(err, req, res, next) {
   if (err instanceof ValidationError) {
+    logger.logError(err);
     res.status(err.status).send(err.message);
     return;
   }
   logger.logError(err);
   res.status(INTERNAL_SERVER_ERROR).send(getStatusText(INTERNAL_SERVER_ERROR));
-  next();
+  next(err);
 }
 
 module.exports = { errorHandler, ValidationError };
